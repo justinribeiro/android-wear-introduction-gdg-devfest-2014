@@ -1,4 +1,4 @@
-android-wear-introduction-gdg-devfest-2014
+android-wear-introduction-gdg-devfest-fresno-2014
 ==========================================
 
-Getting started with Android Wear, GDG DevFest edition.
+Talk for GDG DevFest Fresno 2014
