@@ -103,7 +103,55 @@
 				</section>
 				
         <section>
-				  <h2>Two actions</h2>
+				  <h2>Design Principles</h2>
+				  <h3>They're important and we cannot ignore them</h3>
+				</section>
+				
+        <section>
+				  <h2>Focus on not stopping the user and all else will follow</h2>
+				</section>
+				
+        <section>
+				  <h2>Design for big gestures</h2>
+				</section>
+				
+        <section>
+				  <h2>Think about stream cards first</h2>
+				</section>
+				
+				<section>
+				  <h2>Do one thing, really fast</h2>
+				</section>
+				
+        <section>
+				  <h2>Design for the corner of the eye</h2>
+				  <ul>
+				    <li>We're wearing a watch, we don't want it in the way</li>
+				    <li>Grab and let go in a glance</li>
+				  </ul>
+				</section>
+				
+				<section>
+				  <h2>Don’t be a constant shoulder tapper</h2>
+				  <ul>
+				    <li>Overloading the user with info and words is a bad concept</li>
+            <li>Doing that massive amounts of time is no good</li>
+				  </ul>
+				</section>
+				
+        <section>
+          <h2>Design Principles to UI Patterns</h2>
+          <ul>
+            <li>Cards: somewhat similar Glass / Google Now</li>
+            <li>Pages: a bundle of cards</li>
+            <li>Stack: groupings of cards</li>
+            <li>2D picker: choose from list, select attribute</li>
+            <li>Voice commands: invoke intents, take user input</li>
+          </ul>
+        </section>
+				
+        <section>
+				  <h2>Let's break it down: two actions</h2>
 				  <ul>
 				    <li>User talks to us</li>
 				    <li>We talk to the user</li>
@@ -130,16 +178,6 @@
 				  <h2>Example: Google Now</h2>
 				  <ul>
 				    <li>All about context: information always attempts to be timely</li>
-				    <li></li>
-				  </ul>
-				</section>
-
-        <section>
-				  <h2>Context is nothing without the glance</h2>
-				  <ul>
-				    <li>We're wearing a watch, we don't want it in the way</li>
-				    <li>Overloading the user with info and words is a bad concept</li>
-				    <li>Limit the congnition time</li>
 				  </ul>
 				</section>
 				
@@ -210,7 +248,7 @@ NotificationCompat.Builder myNotification =
         .setContentText("DevFest 2014 Whooo Hooo")
         .setContentIntent(myIntent)
         .addAction(R.drawable.ic_something,
-                "More", 
+                "More",
                 myOtherIntent);
 
 </code></pre>
@@ -493,7 +531,7 @@ PendingResult<DataItemResult>
             <li>Listen for event we want, say onDataChanged()</li>
           </ul>
 <pre><code>
-// ... snip ... 
+// ... snip ...
 @Override
 public void onDataChanged(DataEventBuffer dataEvents) {
     for (DataEvent event : dataEvents) {
@@ -504,7 +542,7 @@ public void onDataChanged(DataEventBuffer dataEvents) {
         }
     }
 }
-// ... snip ... 
+// ... snip ...
 
 </code></pre>
         </section>
@@ -544,6 +582,12 @@ dependencies {
             <li>WatchViewStub</li>
           </ul>
         </section>
+        
+        <section>
+          <h2></h2>
+          <ul>
+          </ul>
+        </section>
 
 				<section>
           <h1>The End</h1>
@@ -567,7 +611,7 @@ dependencies {
 			// Full list of configuration options available here:
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
-				controls: true,
+				controls: false,
 				progress: true,
 				history: true,
 				center: true,
