@@ -70,27 +70,31 @@
 				
 				<section>
 				  <h2>Wear embodies simplicity</h2>
+          <img src="imgs/the-simple-glance.jpg">
 				</section>
 
         <section>
-				  <h2>What sometimes developers think</h2>
+				  <h2>What developers sometimes think</h2>
+          <img src="imgs/nexus-7-watch.jpg">
 				</section>
 				
 				<section>
-				  <h2>Wear is not a my-phone-on-my-wrist idea</h2>
+				  <h2>Wear is not a my-phone-on-my-wrist</h2>
 				</section>
 
         <section>
           <h3>But it's just Android</h3>
-				  <h2>As developers, we have to re-think how we approach the platform</h2>
+				  <h2>Never more common words spoken</h2>
 				</section>
 
         <section>
-				  <h2>Just because we can, doesn't mean we should</h2>
+				  <h2>Just because we can, <br>doesn't mean we should</h2>
+          <img src="imgs/microsoft-analog-keyboard-via-engadget.jpg">
+          <p class="smaller">Source: <a href="http://www.engadget.com/2014/10/11/microsoft-android-wear-keyboard/">Engadget - "Microsoft's Android Wear keyboard has you drawing every letter"</a></p>
 				</section>
 
         <section>
-				  <h2>[Justin's rant on keyboards]</h2>
+				  <h2>[why keyboards why]</h2>
 				</section>
 
         <section>
@@ -108,19 +112,35 @@
 				</section>
 				
         <section>
-				  <h2>Focus on not stopping the user and all else will follow</h2>
+				  <h2>Focus on not stopping the user</h2>
+          <img src="imgs/five-seconds.gif">
+          <h2>all else will follow</h2>
 				</section>
 				
         <section>
-				  <h2>Design for big gestures</h2>
+				  <h2>Design for Big gestures</h2>
+          <img src="imgs/big-gesture.png">
 				</section>
 				
         <section>
 				  <h2>Think about stream cards first</h2>
+          <div class="fbox">
+            <div class="w30">
+              <img src="imgs/context-stream.gif">
+            </div>
+            <div class="w70">
+              <ul>
+                <li>What user needs now</li>
+                <li>If you're not relevent, your app will be muted</li>
+                <li>Don't know when to be relevent? Use voice</li>
+              </ul>
+            </div>
+          </div>
 				</section>
 				
 				<section>
 				  <h2>Do one thing, really fast</h2>
+          <p>Think about those seconds</p>
 				</section>
 				
         <section>
@@ -160,25 +180,34 @@
 				
         <section>
 				  <h2>User talks to us</h2>
-				  <ul>
-				    <li>Voice actions via "OK Google"</li>
-				    <li>Our APK runs on device</li>
-				  </ul>
+          <div class="fbox">
+            <div class="w30">
+              <img src="imgs/vision-voice.png">
+            </div>
+            <div class="w70">
+              <ul>
+                <li>Voice actions via "OK Google"</li>
+                <li>Capture reply via voice</li>
+                <li>Our own APK runs on wearable</li>
+              </ul>
+            </div>
+          </div>
 				</section>
 				
         <section>
 				  <h2>We talk to the user</h2>
-				  <ul>
-				    <li>Context Stream: right information at the right time</li>
-				    <li>Mirrors notifications from phone</li>
-				  </ul>
-				</section>
+          <div class="fbox">
+            <div class="w30">
+              <img src="imgs/vision-low.png">
+            </div>
+            <div class="w70">
+              <ul>
+                <li>Context Stream: right information at the right time</li>
+                <li>Low to zero interaction</li>
+              </ul>
+            </div>
+          </div>
 
-        <section>
-				  <h2>Example: Google Now</h2>
-				  <ul>
-				    <li>All about context: information always attempts to be timely</li>
-				  </ul>
 				</section>
 				
         <section>
@@ -192,12 +221,19 @@
 				
         <section>
 				  <h2>Notifications</h2>
-          <p>Fastest way to add a card into the user context stream</p>
-				  <ul>
-				    <li>Bridged notifications</li>
-				    <li>Enhanced notifications</li>
-				    <li>Other options</li>
-				  </ul>
+          <div class="fbox">
+            <div class="w30">
+              <img src="imgs/assets_specifics.png">
+            </div>
+            <div class="w70">
+              <ul>
+                <li>Bridged notifications</li>
+                <li>Enhanced notifications</li>
+                <li>Fastest way to add a card into the user context stream</li>
+              </ul>
+            </div>
+          </div>
+
 				</section>
 				
         <section>
@@ -206,6 +242,7 @@
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.NotificationCompat.WearableExtender;
+
 </code></pre>
 				</section>
 
@@ -307,7 +344,8 @@ NotificationCompat.Builder myNotification =
         </section>
 
         <section>
-          <p>Image Here</p>
+          <p>The big view...but tiny on this slide.</p>
+          <img src="imgs/big-view.png">
         </section>
 
         <section>
@@ -326,10 +364,6 @@ Notification myNotification = new NotificationCompat.Builder(someContext)
         .extend(extendMyWearable)
         .build();
 </code></pre>
-        </section>
-
-        <section>
-          <p>Image Here</p>
         </section>
 
         <section>
@@ -361,7 +395,8 @@ notificationManager.notify(notificationId, thePagesAll);
         </section>
 
         <section>
-          <p>Image Here</p>
+          <p>Pages!</p>
+          <img src="imgs/card-pages.png">
         </section>
 
         <section>
@@ -382,10 +417,6 @@ Notification myNotification = new NotificationCompat.Builder(someContext)
 notificationManager.notify(notificationId1, myNotification);
 
 </code></pre>
-        </section>
-
-        <section>
-          <p>Image Here</p>
         </section>
 
         <section>
@@ -414,7 +445,8 @@ notificationManager.notify(notificationId3, summaryNotification);
         </section>
 
         <section>
-          <p>Image Here</p>
+          <p>Stacks!</p>
+          <img src="imgs/stacks.png">
         </section>
 
         <section>
@@ -574,7 +606,7 @@ dependencies {
         </section>
 
         <section>
-          <h2>You get a host of classes for use</h2>
+          <h2>You get a host of classes for use...</h2>
           <ul>
             <li>BoxInsetLayout, Card Fragment, CircledImageView</li>
             <li>GridViewPager, GridPagerAdapter, FragmentGridPagerAdapter</li>
@@ -584,8 +616,116 @@ dependencies {
         </section>
         
         <section>
-          <h2></h2>
+          <h2>Which helps manage the space you have</h2>
+          <img src="imgs/custom-ui.png">
+        </section>
+
+        <section>
+          <h2>Hellooooo? Are you there watch?</h2>
+          <h3>Voice Actions</h3>
+        </section>
+
+        <section>
+          <h2>Three types of voice actions</h2>
+          <ol>
+            <li>System Provided</li>
+            <li>App Provided</li>
+            <li>Free-Form Speech</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>System Provided</h2>
+          <div class="fbox">
+            <div class="w30">
+              <img src="imgs/sys-provided.png">
+            </div>
+            <div class="w70">
+              <ul>
+                <li>Task Based</li>
+                <li>Built in to the platform</li>
+                <li>Specified with intent-filter</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>System Provided (continued)</h2>
+<pre><code>
+&#x3C;activity android:name=&#x22;MyNoteActivity&#x22;&#x3E;
+&#x9;&#x3C;intent-filter&#x3E;
+&#x9;&#x9;&#x3C;action android:name=&#x22;android.intent.action.SEND&#x22; /&#x3E;
+&#x9;&#x9;&#x3C;category android:name=&#x22;com.google.android.voicesearch.SELF_NOTE&#x22; /&#x3E;
+&#x9;&#x3C;/intent-filter&#x3E;
+&#x3C;/activity&#x3E;
+
+</code></pre>
+        </section>
+
+        <section>
+          <h2>App Provided</h2>
+          <div class="fbox">
+            <div class="w30">
+              <img src="imgs/app-provided.png">
+            </div>
+            <div class="w70">
+              <ul>
+                <li>App based</li>
+                <li>Declared like a Launcher icon</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>App Provided (continued)</h2>
+<pre><code>
+&#x3C;activity android:name=&#x22;StartRunActivity&#x22; android:label=&#x22;MyRunningApp&#x22;&#x3E;
+&#x9;&#x3C;intent-filter&#x3E;
+&#x9;&#x9;&#x3C;action android:name=&#x22;android.intent.action.MAIN&#x22; /&#x3E;
+&#x9;&#x9;&#x3C;category android:name=&#x22;android.intent.category.LAUNCHER&#x22; /&#x3E;
+&#x9;&#x3C;/intent-filter&#x3E;
+&#x3C;/activity&#x3E;E;
+
+</code></pre>
+        </section>
+
+        <section>
+          <h2>Speech Recognizer</h2>
+          <div class="fbox">
+            <div class="w30">
+              <img src="imgs/speak.png">
+            </div>
+            <div class="w70">
+              <ul>
+                <li>Take speech from user</li>
+                <li>Useful when you need to take input > process</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Speech Recognizer (continued)</h2>
+<pre><code>
+private void displaySpeechRecognizer() {
+  Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+  intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+
+  startActivityForResult(intent, SPEECH_REQUEST_CODE);
+}   
+
+</code></pre>
+        </section>
+
+        <section>
+          <h2>That's a lot of information for after lunch</h2>
+          <p>We've only touched the surface, so much more!</p>
           <ul>
+            <li><a href="http://developer.android.com/training/building-wearables.html">Building Apps for Wearables @ developer.android.com</a></li>
+            <li><a href="http://developer.android.com/design/wear/index.html">Design for Android Wear @ developer.android.com</a></li>
           </ul>
         </section>
 
