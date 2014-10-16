@@ -154,6 +154,7 @@
 				
         <section>
 				  <h2>Notifications</h2>
+          <p>Fastest way to add a card into the user context stream</p>
 				  <ul>
 				    <li>Bridged notifications</li>
 				    <li>Enhanced notifications</li>
@@ -162,20 +163,387 @@
 				</section>
 				
         <section>
-				  <h2>Good news!</h2>
-				  <ul>
-				    <li>Notifications are free!</li>
-				  </ul>
+				  <h2>Let's build a notification - imports</h2>
+<pre><code>
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.NotificationCompat.WearableExtender;
+</code></pre>
 				</section>
+
+        <section>
+          <h2>Let's build a notification - Builder</h2>
+<pre><code>
+// Let's build a notification
+NotificationCompat.Builder myNotification =
+        new NotificationCompat.Builder(this)
+        .setSmallIcon(R.drawable.ic_event)
+        .setContentTitle("I'm a title!")
+        .setContentText("DevFest 2014 Whooo Hooo")
+        .setContentIntent(myIntent);
+
+// Get an instance of the NotificationManager service
+NotificationManagerCompat notificationManager =
+        NotificationManagerCompat.from(this);
+
+// Build and send
+notificationManager.notify(myNotificationId, myNotification.build());
+</code></pre>
+        </section>
 				
         <section>
-				  <h2>Making things even more relevent</h2>
-				  <ul>
-				    <li>Stacks</li>
-				    <li>Pages</li>
-				    <li>Replies</li>
-				  </ul>
-				</section>
+          <h2>.setContentIntent() UX</h2>
+          <ul>
+            <li>On handheld: touch notification and Intent invoked</li>
+            <li>On Wear Device: swipe left, tap "Open", invoked on handheld</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Adding additional options</h2>
+<pre><code>
+
+NotificationCompat.Builder myNotification =
+        new NotificationCompat.Builder(this)
+        .setSmallIcon(R.drawable.ic_event)
+        .setContentTitle("I'm a title!")
+        .setContentText("DevFest 2014 Whooo Hooo")
+        .setContentIntent(myIntent)
+        .addAction(R.drawable.ic_something,
+                "More", 
+                myOtherIntent);
+
+</code></pre>
+        </section>
+
+        <section>
+          <h2>.addAction() UX</h2>
+          <ul>
+            <li>On handheld: Adjacent button on notification</li>
+            <li>On Wear Device: swipe left to access</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Ummm....these seem familiar...</h2>
+          <h3>If your app has notification using NotificationCompat, probably</h3>
+        </section>
+
+        <section>
+          <h2>Specifics for Wear</h2>
+          <h3>Adding a Wear only action WearableExtender.addAction()</h3>
+<pre><code>
+
+
+NotificationCompat.Action myAction = new NotificationCompat.Action.Builder(...)
+
+NotificationCompat.Builder myNotification =
+        new NotificationCompat.Builder(this)
+        .setSmallIcon(R.drawable.ic_event)
+        .setContentTitle("I'm a title!")
+        .setContentText("DevFest 2014 Whooo Hooo")
+        .extend(new WearableExtender().addAction(myAction));
+
+
+</code></pre>
+        </section>
+
+        <section>
+          <h2>Specifics for Wear</h2>
+          <h3>The Big View</h3>
+<pre><code>
+
+BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
+bigStyle.bigText("I'm supposed to be long but that might not fit into this slide, yada yada yada");
+
+NotificationCompat.Builder myNotification =
+        new NotificationCompat.Builder(this)
+        .setSmallIcon(R.drawable.ic_event)
+        .setContentTitle("I'm a title!")
+        .setContentText("DevFest 2014 Whooo Hooo")
+        .addAction(R.drawable.ic_something, "More", myOtherIntent)
+        .setStyle(bigStyle);
+
+
+</code></pre>
+        </section>
+
+        <section>
+          <p>Image Here</p>
+        </section>
+
+        <section>
+          <h2>Ugh, our icon looks horrible with that</h2>
+          <p>Yes, we should be using NotificationCompat.WearableExtender()</p>
+<pre><code>
+NotificationCompat.WearableExtender extendMyWearable =
+        new NotificationCompat.WearableExtender()
+        .setHintHideIcon(true)
+        .setBackground(myMoreAwesomeImage);
+
+Notification myNotification = new NotificationCompat.Builder(someContext)
+        .setContentTitle("Justin Says....")
+        .setContentText("Speeling is hard")
+        .setSmallIcon(R.drawable.ic_blahblah);
+        .extend(extendMyWearable)
+        .build();
+</code></pre>
+        </section>
+
+        <section>
+          <p>Image Here</p>
+        </section>
+
+        <section>
+          <h2>Lot more with WearableExtender()</h2>
+          <ul>
+            <li>See documentation @ <a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.WearableExtender.html">developer.android.com</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Speaking of a lot more...Pages</h2>
+          <p>Maybe you just need to send a little more without forcing the user to their handheld</p>
+<pre><code>
+// Create builder for the main notification
+NotificationCompat.Builder theMainNotification = new NotificationCompat.Builder(...);
+
+// Create the second page
+Notification theSecondPageNotification = new NotificationCompat.Builder(...);
+
+// The pages become friends
+Notification thePagesAll = new WearableExtender()
+                          .addPage(theSecondPageNotification)
+                          .extend(theMainNotification)
+                          .build();
+// send them!
+notificationManager.notify(notificationId, thePagesAll);
+
+</code></pre>
+        </section>
+
+        <section>
+          <p>Image Here</p>
+        </section>
+
+        <section>
+          <h2>And maybe we want to send lots</h2>
+          <p>We should probably stack our notifications</p>
+<pre><code>
+// Our group for the stack
+final static String MY_GROUP_KEY = "group_things_such";
+
+// Let's add this notification to this group
+Notification myNotification = new NotificationCompat.Builder(someContext)
+         .setContentTitle("Get it together")
+         .setContentText("I'm important news")
+         .setSmallIcon(R.drawable.ic_blahblah);
+         .setGroup(MY_GROUP_KEY)
+         .build();
+
+notificationManager.notify(notificationId1, myNotification);
+
+</code></pre>
+        </section>
+
+        <section>
+          <p>Image Here</p>
+        </section>
+
+        <section>
+          <h2>Good, but we need a summary</h2>
+          <p></p>
+<pre><code>
+Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),
+        R.drawable.ic_large_icon);
+
+Notification summary = new NotificationCompat.Builder(mContext)
+        .setContentTitle("2 new messages")
+        .setSmallIcon(R.drawable.ic_small_icon)
+        .setLargeIcon(largeIcon)
+        .setStyle(new NotificationCompat.InboxStyle()
+                .addLine("Alex Faaborg   Check this out")
+                .addLine("Jeff Chang   Launch Party")
+                .setBigContentTitle("2 new messages")
+                .setSummaryText("johndoe@gmail.com"))
+        .setGroup(MY_GROUP_KEY)
+        .setGroupSummary(true)
+        .build();
+
+notificationManager.notify(notificationId3, summaryNotification);
+
+</code></pre>
+        </section>
+
+        <section>
+          <p>Image Here</p>
+        </section>
+
+        <section>
+          <h2>The power in notifications</h2>
+          <ul>
+            <li>The context stream cannot be underestimated</li>
+            <li>Be picky: does my user need this information now?</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>And then we built some apps</h2>
+          <ul>
+            <li>It's roughly the same as building an Android app</li>
+            <li>Carvats include: sleep > Home, offload processing, no direct install, some apis not present, bluetooth debugging</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Whoaaa no direct install?</h2>
+          <ul>
+            <li>When you're debugging, it operates like normal Android; it will deploy direct to Wear device</li>
+            <li>When you ship, the companion apk ships inside the handheld app and when the handheld app is installed, the Wear APK is sent to the device</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Reasons why you might want to build an app</h2>
+          <ul>
+            <li>You want to share data between handheld and wearable</li>
+            <li>You want to implement a custom UI that is not BigTextStyle() or InboxStyle()</li>
+            <li>You want sensor data</li>
+            <li>More voice actions...action!</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>The power is in the messaging</h2>
+          <ul>
+            <li>Wearable Data Layer API</li>
+            <li>Node API</li>
+            <li>Message API</li>
+            <li>Data API</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Node API</h2>
+          <ul>
+            <li>Let's us know when two devices are connected</li>
+            <li>If we know this, we can exchange other data</li>
+          </ul>
+<pre><code>
+NodeApi.GetConnectedNodesResult nodes =
+            Wearable.NodeApi.getConnectedNodes(myGoogleApiClient);
+
+</code></pre>
+        </section>
+
+        <section>
+          <h2>Node API (continued)</h2>
+          <p>We can also listen and be notified if this connection changes</p>
+<pre><code>
+public interface NodeListener {
+  void onPeerConnected(Node peer);
+  void onPeerDisconnected(Node peer);
+}
+
+</code></pre>
+<p>See: <a href="https://developer.android.com/reference/com/google/android/gms/wearable/NodeApi.NodeListener.html">NodeApi.NodeListener</a></p>
+        </section>
+
+        <section>
+          <h2>Message API</h2>
+          <ul>
+            <li>Low latency messaging as needed</li>
+            <li>Should be ephemeral, smaller payloads</li>
+          </ul>
+<pre><code>
+// Method
+PendingResult<SendMessageResult>
+ sendMessage(GoogleApiClient client, String nodeId, String action, byte[] data);
+
+// Listener
+public interface MessageListener {
+  void onMessageReceived(MessageEvent messageEvent);
+}
+
+</code></pre>
+        </section>
+
+        <section>
+          <h2>Data API</h2>
+          <ul>
+            <li>Store data to share between device</li>
+            <li>Buffer automatically if disconnected</li>
+            <li>Storage: DataItem = smaller, Asset = larger</li>
+          </ul>
+<pre><code>
+// Method
+PendingResult<DataItemResult>
+  putDataItem(GoogleApiClient client, PutDataRequest request);
+
+PendingResult<DataItemResult>
+  getDataItem(GoogleApiClient client, Uri uri);
+
+</code></pre>
+        </section>
+
+        <section>
+          <h2>Data API (continued)</h2>
+          <ul>
+            <li>Receiving data? WearableListenerService is the one!</li>
+            <li>Listen for event we want, say onDataChanged()</li>
+          </ul>
+<pre><code>
+// ... snip ... 
+@Override
+public void onDataChanged(DataEventBuffer dataEvents) {
+    for (DataEvent event : dataEvents) {
+        if (event.getType() == DataEvent.TYPE_DELETED) {
+            Log.d(TAG, "DataItem deleted: " + event.getDataItem().getUri());
+        } else if (event.getType() == DataEvent.TYPE_CHANGED) {
+             Log.d(TAG, "DataItem changed: " + event.getDataItem().getUri());
+        }
+    }
+}
+// ... snip ... 
+
+</code></pre>
+        </section>
+
+        <section>
+            <h2>Bring on the custom UI!</h2>
+            <p>Whoooa there partner: let's have a talk.</p>
+            <ul>
+              <li>Notifications generally should be on the handheld and synced; you don't really want to reinvent the wheel</li>
+              <li>Custom's only work on the wearable, not the handheld</li>
+              <li>Custom's don't sync</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>That now said, the unofficial UI lib</h2>
+            <ul>
+              <li>If you use the Android Studio Project Wizard, it's automagically included</li>
+              <li>Doing this somewhere else? Add to build.gradle:</li>
+            </ul>
+<pre><code>
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.google.android.support:wearable:+'
+    compile 'com.google.android.gms:play-services-wearable:+'
+}
+
+</code></pre>
+        </section>
+
+        <section>
+          <h2>You get a host of classes for use</h2>
+          <ul>
+            <li>BoxInsetLayout, Card Fragment, CircledImageView</li>
+            <li>GridViewPager, GridPagerAdapter, FragmentGridPagerAdapter</li>
+            <li>ConfirmationActivity, DismissOverlayView</li>
+            <li>WatchViewStub</li>
+          </ul>
+        </section>
 
 				<section>
           <h1>The End</h1>
