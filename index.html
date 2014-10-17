@@ -608,9 +608,14 @@ dependencies {
 
 </code></pre>
         </section>
+        
+        <section>
+          <h2>Which helps manage the space you have</h2>
+          <img src="imgs/custom-ui.png">
+        </section>
 
         <section>
-          <h2>You get a host of classes for use...</h2>
+          <h2>You get a host of things we can use</h2>
           <ul>
             <li>BoxInsetLayout, Card Fragment, CircledImageView</li>
             <li>GridViewPager, GridPagerAdapter, FragmentGridPagerAdapter</li>
@@ -620,8 +625,71 @@ dependencies {
         </section>
         
         <section>
-          <h2>Which helps manage the space you have</h2>
-          <img src="imgs/custom-ui.png">
+          <h2>WatchViewStub for the double layout</h2>
+          <p>Helps when you need seperate layouts for form factors</p>
+<pre><code>
+&#x3C;android.support.wearable.view.WatchViewStub
+    xmlns:android=&#x22;http://schemas.android.com/apk/res/android&#x22;
+    xmlns:app=&#x22;http://schemas.android.com/apk/res-auto&#x22;
+    xmlns:tools=&#x22;http://schemas.android.com/tools&#x22;
+    android:id=&#x22;@+id/watch_view_stub&#x22;
+    android:layout_width=&#x22;match_parent&#x22;
+    android:layout_height=&#x22;match_parent&#x22;
+    app:rectLayout=&#x22;@layout/rect_activity_wear&#x22;
+    app:roundLayout=&#x22;@layout/round_activity_wear&#x22;&#x3E;
+&#x3C;/android.support.wearable.view.WatchViewStub&#x3E;
+</code></pre>
+        </section>
+        
+        <section>
+          <h2>There is a gotcha</h2>
+          <p>Have to wait for inflations of view</p>
+<pre><code>
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_wear);
+
+    WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
+    stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
+        @Override public void onLayoutInflated(WatchViewStub stub) {
+            
+            // Now you can access your views
+            TextView tv = (TextView) stub.findViewById(R.id.text);
+            
+        }
+    });
+}
+</code></pre>
+        </section>
+        
+        <section>
+          <h2>The opposite: BoxInsetLayout</h2>
+          <p>Allows single layout define for both form factors</p>
+<pre><code>
+  &#x3C;android.support.wearable.view.BoxInsetLayout
+    xmlns:android=&#x22;http://schemas.android.com/apk/res/android&#x22;
+    xmlns:app=&#x22;http://schemas.android.com/apk/res-auto&#x22;
+    android:background=&#x22;@drawable/robot_background&#x22;
+    android:layout_height=&#x22;match_parent&#x22;
+    android:layout_width=&#x22;match_parent&#x22;
+    android:padding=&#x22;15dp&#x22;&#x3E;
+
+    &#x3C;FrameLayout
+        android:layout_width=&#x22;match_parent&#x22;
+        android:layout_height=&#x22;match_parent&#x22;
+        android:padding=&#x22;5dp&#x22;
+        app:layout_box=&#x22;all&#x22;&#x3E;
+
+        &#x3C;TextView
+            android:gravity=&#x22;center&#x22;
+            android:layout_height=&#x22;wrap_content&#x22;
+            android:layout_width=&#x22;match_parent&#x22;
+            android:text=&#x22;@string/sometext&#x22;
+            android:textColor=&#x22;@color/black&#x22; /&#x3E;
+            
+            ...
+</code></pre>
         </section>
 
         <section>
@@ -677,6 +745,7 @@ dependencies {
               <ul>
                 <li>App based</li>
                 <li>Declared like a Launcher icon</li>
+                <li>Access with "Start android:label"</li>
               </ul>
             </div>
           </div>
@@ -709,17 +778,75 @@ dependencies {
             </div>
           </div>
         </section>
+        
+        <section>
+          <h2>Add to notifications</h2>
+<pre><code>
+// Key for the string that's delivered in the action's intent
+private static final String EXTRA_VOICE_REPLY = "extra_voice_reply";
+
+RemoteInput remoteInput = new RemoteInput.Builder(EXTRA_VOICE_REPLY)
+        .setLabel(replyLabel)
+        .build();
+        
+// Create the reply action and add the remote input
+NotificationCompat.Action action =
+        new NotificationCompat.Action.Builder(R.drawable.ic_reply_icon,
+                getString(R.string.label, replyPendingIntent))
+                .addRemoteInput(remoteInput)
+                .build();
+                
+</code></pre>
+        </section>
+        
+        <section>
+          <h2>Process return</h2>
+<pre><code>
+/**
+ * Obtain the intent that started this activity by calling
+ * Activity.getIntent() and pass it into this method to
+ * get the associated voice input string.
+ */
+
+private CharSequence getMessageText(Intent intent) {
+    Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
+        if (remoteInput != null) {
+            return remoteInput.getCharSequence(EXTRA_VOICE_REPLY);
+        }
+    }
+    return null;
+}
+
+</code></pre>
+        </section>
 
         <section>
-          <h2>Speech Recognizer (continued)</h2>
+          <h2>Fire up on Wear</h2>
 <pre><code>
-private void displaySpeechRecognizer() {
-  Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-  intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+private static final int SPEECH_REQUEST_CODE = 0;
 
-  startActivityForResult(intent, SPEECH_REQUEST_CODE);
-}   
+// Create an intent that can start the Speech Recognizer activity
+private void displaySpeechRecognizer() {
+    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+// Start the activity, the intent will be populated with the speech text
+    startActivityForResult(intent, SPEECH_REQUEST_CODE);
+}
+
+// This callback is invoked when the Speech Recognizer returns.
+// This is where you process the intent and extract the speech text from the intent.
+@Override
+protected void onActivityResult(int requestCode, int resultCode,
+        Intent data) {
+    if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
+        List<String> results = data.getStringArrayListExtra(
+                RecognizerIntent.EXTRA_RESULTS);
+        String spokenText = results.get(0);
+        // Do something with spokenText
+    }
+    super.onActivityResult(requestCode, resultCode, data);
+}
 
 </code></pre>
         </section>
